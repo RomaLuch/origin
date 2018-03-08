@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://example.com/functions" prefix="f" %>
 <html>
 <head>
     <title>Cash Records</title>
@@ -24,12 +25,17 @@
 
     <c:forEach items="${records}" var="record">
         <tr>
-            <td>${record.getDateTime()}</td>
+            <td>${f:formatLocalDateTime(record.getDateTime(), 'dd.MM.yyyy HH.mm')}</td>
             <td>${record.getDescription()}</td>
             <td>${record.getAmount()}</td>
+            <td><a href="records?action=update&id=${record.getId()}">update</a></td>
+            <td><a href="records?action=delete&id=${record.getId()}">delete</a></td>
         </tr>
     </c:forEach>
 </table>
 
+<a href="records?action=create">
+    <button>Добавить еду</button>
+</a>
 </body>
 </html>
