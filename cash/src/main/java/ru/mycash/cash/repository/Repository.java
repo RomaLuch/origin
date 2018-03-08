@@ -1,13 +1,13 @@
-package ru.mycash.cash.service;
+package ru.mycash.cash.repository;
 
 import ru.mycash.cash.model.Record;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface Service {
+public interface Repository {
     void save(Record record);
     void delete(Integer id);
     Record get(Integer id);
-    List<Record> getAll();
+    Collection<Record> getAll();
 }

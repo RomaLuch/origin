@@ -4,20 +4,18 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Record {
-    private static AtomicInteger count = new AtomicInteger(0);
-    private AtomicInteger id;
+    private Integer id;
     private LocalDateTime dateTimetime;
     private String description;
     private Integer amount;
 
     public Record(LocalDateTime dateTimetime, String description, Integer value) {
-        this.id =  new AtomicInteger(count.incrementAndGet());
         this.dateTimetime = dateTimetime;
         this.description = description;
         this.amount = value;
     }
 
-    public AtomicInteger getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -33,10 +31,6 @@ public class Record {
         return amount;
     }
 
-    public void setId(AtomicInteger id) {
-        this.id = id;
-    }
-
     public void setDateTimetime(LocalDateTime dateTimetime) {
         this.dateTimetime = dateTimetime;
     }
@@ -47,6 +41,15 @@ public class Record {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public boolean isNew()
+    {
+        return id==null;
     }
 
     @Override

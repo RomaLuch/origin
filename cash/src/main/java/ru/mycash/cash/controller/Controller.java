@@ -1,6 +1,5 @@
 package ru.mycash.cash.controller;
 
-import ru.mycash.cash.dao.Repository;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.service.Service;
 import ru.mycash.cash.service.ServiseImpl;
@@ -65,11 +64,11 @@ else if("create".equalsIgnoreCase(action))
             record.setDateTimetime(ldt);
             record.setDescription(description);
             record.setAmount(amount);
-            service.update(record);
+            service.save(record);
         }
         else {
-                Record meal = new Record(ldt,description,amount);
-                service.create(meal);
+                Record record = new Record(ldt,description,amount);
+                service.save(record);
             }
 
         List<Record> records = service.getAll();
