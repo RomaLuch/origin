@@ -5,14 +5,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Record {
     private Integer id;
-    private LocalDateTime dateTimetime;
+    private LocalDateTime dateTime;
     private String description;
     private Integer amount;
 
-    public Record(LocalDateTime dateTimetime, String description, Integer value) {
-        this.dateTimetime = dateTimetime;
+    public Record(LocalDateTime dateTime, String description, Integer value) {
+        this(null,dateTime,description,value);
+    }
+
+    public Record(Integer id, LocalDateTime dateTime, String description, Integer amount) {
+        this.id = id;
+        this.dateTime = dateTime;
         this.description = description;
-        this.amount = value;
+        this.amount = amount;
     }
 
     public Integer getId() {
@@ -20,7 +25,7 @@ public class Record {
     }
 
     public LocalDateTime getDateTime() {
-        return dateTimetime;
+        return dateTime;
     }
 
     public String getDescription() {
@@ -29,18 +34,6 @@ public class Record {
 
     public Integer getAmount() {
         return amount;
-    }
-
-    public void setDateTimetime(LocalDateTime dateTimetime) {
-        this.dateTimetime = dateTimetime;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public void setId(Integer id) {
@@ -56,7 +49,7 @@ public class Record {
     public String toString() {
         return "Record{" +
                 "id=" + id +
-                ", dateTimetime=" + dateTimetime +
+                ", dateTimetime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", amount=" + amount +
                 '}';

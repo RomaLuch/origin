@@ -20,16 +20,16 @@
     <th>Дата</th>
     <th>Описание</th>
     <th>Сумма</th>
-    <%--<th colspan="2">Редактирование</th>--%>
-
+    <th colspan="2">Редактирование</th>
 
     <c:forEach items="${records}" var="record">
+        <jsp:useBean id="record" scope="page" type="ru.mycash.cash.model.Record"/>
         <tr>
-            <td>${f:formatLocalDateTime(record.getDateTime(), 'dd.MM.yyyy HH.mm')}</td>
-            <td>${record.getDescription()}</td>
-            <td>${record.getAmount()}</td>
-            <td><a href="records?action=update&id=${record.getId()}">update</a></td>
-            <td><a href="records?action=delete&id=${record.getId()}">delete</a></td>
+            <td>${f:toString(record.dateTime)}</td>
+            <td>${record.description}</td>
+            <td>${record.amount}</td>
+            <td><a href="records?action=update&id=${record.id}">update</a></td>
+            <td><a href="records?action=delete&id=${record.id}">delete</a></td>
         </tr>
     </c:forEach>
 </table>

@@ -11,7 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RepositoryImpl implements Repository{
 
     private static AtomicInteger count = new AtomicInteger(0);
+
     private Map<Integer, Record> repository = new ConcurrentHashMap<>();
+
     public static final List<Record> RECORDS = Arrays.asList(
         new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "еда", 500),
         new Record(LocalDateTime.of(2018, Month.MAY, 30, 11, 0), "транспорт", 100),

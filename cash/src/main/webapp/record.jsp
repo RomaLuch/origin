@@ -12,23 +12,46 @@
 <html>
 <head>
     <title>Record</title>
-</head>
 
+    <style>
+        dl {
+            background: none repeat scroll 0 0 #FAFAFA;
+            margin: 8px 0;
+            padding: 0;
+        }
+
+        dt {
+            display: inline-block;
+            width: 170px;
+        }
+
+        dd {
+            display: inline-block;
+            margin-left: 8px;
+            vertical-align: top;
+        }
+    </style>
+
+</head>
+<h2>${param.action == 'create' ? 'Create record' : 'Edit record'}</h2>
+<hr>
 <form method="post" action = 'records' name="record">
-    <c:if test="${record.getId()!=null}">
-    <input type="text" readonly="readonly" name="id" value="${record.getId()}">
-    </c:if>
-    <br>
-<label>Дата</label>
-<input type="datetime-local" name="date" value="${record.getId()!=null?f:formatLocalDateTime(record.getDateTime(), "yyyy-MM-dd'T'HH:mm"):""}">
-    <br>
-<label>Описание</label>
-<input type="text" name="description" value=""${record.getId()!=null?record.getDescription():"description"}">
-    <br>
-<label>Сумма</label>
-<input type="text" name="amount" value=""${record.getId()!=null?record.getAmount():0}">
-    <br>
-    <br>
+    <jsp:useBean id="record" scope="request" type="ru.mycash.cash.model.Record"/>
+
+    <input type="hidden" name="id" value="${record.id}">
+    <dl>
+<dd>Дата</dd>
+<dt><input type="datetime-local" name="date" value="${record.dateTime}"></dt>
+    </dl>
+    <dl>
+<dd>Описание</dd>
+<dt><input type="text" name="description" value="${record.description}"></dt>
+    </dl>
+    <dl>
+<dd>Сумма</dd>
+<dt><input type="text" name="amount" value="${record.amount}"></dt>
+    </dl>
+        <hr>
     <input type="submit" value="${record.getId()!=null?"Изменить":"Создать"}">
 </form>
 </body>
