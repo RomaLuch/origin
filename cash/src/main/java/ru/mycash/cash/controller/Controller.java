@@ -21,27 +21,27 @@ public class Controller extends HttpServlet{
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-if (action==null) {
-    List<Record> records = service.getAll();
-    request.setAttribute("records", records);
-    request.getRequestDispatcher("/records.jsp").forward(request, response);
-}
-else if("create".equalsIgnoreCase(action) || "update".equalsIgnoreCase(action))
-    {
-        final Record record = "create".equalsIgnoreCase(action)?
-                new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000):
-                service.get(Integer.parseInt(request.getParameter("id")));
+        switch (action == null ? "all" : action) {
+            case "create":
+            case "update":
+                final Record record = "create".equalsIgnoreCase(action) ?
+                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
+                        service.get(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("record", record);
                 request.getRequestDispatcher("/record.jsp").forward(request, response);
-    }
-    else if("delete".equalsIgnoreCase(action))
-    {
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        service.delete(id);
-        List<Record> records = service.getAll();
-        request.setAttribute("records", records);
-        request.getRequestDispatcher("/records.jsp").forward(request, response);
-    }
+                break;
+            case "delete":
+                Integer id = Integer.parseInt(request.getParameter("id"));
+                service.delete(id);
+                response.sendRedirect("records");
+                break;
+            case "all":
+            default:
+                List<Record> records = service.getAll();
+                request.setAttribute("records", records);
+                request.getRequestDispatcher("/records.jsp").forward(request, response);
+                break;
+        }
     }
 
     @Override
