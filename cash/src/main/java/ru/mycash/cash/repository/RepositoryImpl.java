@@ -1,5 +1,6 @@
 package ru.mycash.cash.repository;
 
+import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 
 import java.time.LocalDateTime;
@@ -14,11 +15,14 @@ public class RepositoryImpl implements Repository{
 
     private Map<Integer, Record> repository = new ConcurrentHashMap<>();
 
+    CategoryRepository categoryRepository = new CategoryRepositoryImpl();
+
     public static final List<Record> RECORDS = Arrays.asList(
-        new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "еда", 500),
-        new Record(LocalDateTime.of(2018, Month.MAY, 30, 11, 0), "транспорт", 100),
-        new Record(LocalDateTime.of(2018, Month.MAY, 30, 12, 0), "кино", 600)
+        new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "обед",new Category("еда"), 500),
+        new Record(LocalDateTime.of(2018, Month.MAY, 30, 11, 0), "такси", new Category("транспорт"), 100),
+        new Record(LocalDateTime.of(2018, Month.MAY, 30, 12, 0), "кино", new Category("развлечение"), 600)
     );
+
 
     {
         RECORDS.forEach(this::save);

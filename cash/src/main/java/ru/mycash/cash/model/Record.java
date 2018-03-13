@@ -1,27 +1,24 @@
 package ru.mycash.cash.model;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Record {
-    private Integer id;
+
+public class Record extends AbstractBaseEntity {
+    private Category category;
     private LocalDateTime dateTime;
     private String description;
     private Integer amount;
 
-    public Record(LocalDateTime dateTime, String description, Integer value) {
-        this(null,dateTime,description,value);
+    public Record(LocalDateTime dateTime, String description, Category category, Integer value) {
+        this(null,dateTime,description,category,value);
     }
 
-    public Record(Integer id, LocalDateTime dateTime, String description, Integer amount) {
-        this.id = id;
+    public Record(Integer id, LocalDateTime dateTime, String description, Category category, Integer amount) {
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
+        this.category = category;
         this.amount = amount;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public LocalDateTime getDateTime() {
@@ -36,13 +33,8 @@ public class Record {
         return amount;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public boolean isNew()
-    {
-        return id==null;
+    public Category getCategory() {
+        return category;
     }
 
     @Override

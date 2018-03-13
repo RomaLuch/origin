@@ -48,6 +48,13 @@
 <dt><input type="text" name="description" value="${record.description}"></dt>
     </dl>
     <dl>
+
+        <dl>
+            <input type="hidden" name="category_id" value="${record.category.id}">
+            <dd>Категория</dd>
+            <dt><input type="text" name="amount" value="${record.category.name}"></dt>
+        </dl>
+
 <dd>Сумма</dd>
 <dt><input type="text" name="amount" value="${record.amount}"></dt>
     </dl>

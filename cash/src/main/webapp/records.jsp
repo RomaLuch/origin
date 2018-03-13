@@ -19,6 +19,7 @@
     <caption>Все записи</caption>
     <th>Дата</th>
     <th>Описание</th>
+    <th>Категория</th>
     <th>Сумма</th>
     <th colspan="2">Редактирование</th>
 
@@ -27,6 +28,7 @@
         <tr>
             <td>${f:toString(record.dateTime)}</td>
             <td>${record.description}</td>
+            <td>${record.category.name}</td>
             <td>${record.amount}</td>
             <td><a href="records?action=update&id=${record.id}">update</a></td>
             <td><a href="records?action=delete&id=${record.id}">delete</a></td>
