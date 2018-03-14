@@ -15,7 +15,6 @@ public class RepositoryImpl implements Repository{
 
     private Map<Integer, Record> repository = new ConcurrentHashMap<>();
 
-    CategoryRepository categoryRepository = new CategoryRepositoryImpl();
 
     public static final List<Record> RECORDS = Arrays.asList(
         new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "обед",new Category("еда"), 500),

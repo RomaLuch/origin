@@ -24,16 +24,19 @@ public static final List<Category> CATEGORY = Arrays.asList(new Category("еда
 
     @Override
     public void save(Category category) {
-        System.out.println("save");
         if(category.isNew())
         {
-            System.out.println("save new" + category);
             category.setId(count.incrementAndGet());
             repository.put(category.getId(),category);
-            System.out.println("after save new" + category);
+            System.out.println("if");
+            repository.values().stream().forEach(System.out::println);
         }
-        else repository.computeIfPresent(category.getId(),(id, oldValue)->category);
-    }
+        else {
+            System.out.println("else");
+            repository.computeIfPresent(category.getId(), (id, oldValue) -> category);
+            repository.values().stream().forEach(System.out::println);
+        }
+        }
 
     @Override
     public void delete(Integer id) {

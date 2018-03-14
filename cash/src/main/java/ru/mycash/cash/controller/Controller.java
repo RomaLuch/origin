@@ -28,10 +28,7 @@ public class Controller extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
   //      log.info("doGet");
-List<Category> categories = categoryService.getAll();
-        System.out.println(categories);
 
-categories.stream().forEach(System.out::println);
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
@@ -49,11 +46,7 @@ categories.stream().forEach(System.out::println);
 
                 System.out.println("create");
 
-                //List<Category> categories = categoryService.getAll();
-                System.out.println(categories);
-                categories.stream().forEach(System.out::println);
-
-                request.setAttribute("categorys", categories);
+                request.setAttribute("categorys", categoryService.getAll());
                 request.setAttribute("record", record);
                 request.getRequestDispatcher("/record.jsp").forward(request, response);
                 break;
@@ -64,11 +57,10 @@ categories.stream().forEach(System.out::println);
                 break;
             case "all":
             default:
-
-                System.out.println("action =" + action);
                 List<Record> records = service.getAll();
-                records.forEach(System.out::println);
+                List<Category> categories = categoryService.getAll();
                 request.setAttribute("records", records);
+                request.setAttribute("categories", categories);
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
                 break;
         }

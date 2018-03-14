@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface CategoryService {
-    void save(Category record);
+    void save(Category category);
     void delete(Integer id);
     Category get(Integer id);
     List<Category> getAll();

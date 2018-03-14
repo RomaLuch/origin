@@ -38,12 +38,6 @@ repoitory.delete(id);
 
     @Override
     public List<Category> getAll() {
-     //   log.info("getAll");
-
-        System.out.println("service getall");
-
-        repoitory.getAll().stream().forEach(System.out::println);
-
         return new ArrayList<>(repoitory.getAll());
     }
 }

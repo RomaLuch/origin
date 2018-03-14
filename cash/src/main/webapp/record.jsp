@@ -55,7 +55,7 @@
             <dd>Категория</dd>
             <dt><select>
                 <c:forEach items="${categorys}" var="category">
-                    <jsp:useBean id="category" scope="request" type="ru.mycash.cash.model.Category"/>
+                    <jsp:useBean id="category" scope="page" type="ru.mycash.cash.model.Category"/>
                 <option>${category.name}</option>
                 </c:forEach>
             </select></dt>
