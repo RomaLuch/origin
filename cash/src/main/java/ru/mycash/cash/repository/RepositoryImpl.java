@@ -1,5 +1,6 @@
 package ru.mycash.cash.repository;
 
+import org.slf4j.Logger;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 
@@ -9,7 +10,11 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class RepositoryImpl implements Repository{
+
+    private static final Logger log = getLogger(RepositoryImpl.class);
 
     private static AtomicInteger count = new AtomicInteger(0);
 
@@ -29,6 +34,7 @@ public class RepositoryImpl implements Repository{
 
     @Override
     public void save(Record record) {
+        log.info("save {}",record);
     if(record.isNew())
     {
     record.setId(count.incrementAndGet());
@@ -39,16 +45,20 @@ public class RepositoryImpl implements Repository{
 
     @Override
     public void delete(Integer id) {
+
+        log.info("delete record id({})", id);
         repository.remove(id);
     }
 
     @Override
     public Record get(Integer id) {
+        log.info("get record id({})", id);
         return repository.get(id);
     }
 
     @Override
     public Collection<Record> getAll() {
+        log.info("getAll");
         return repository.values();
     }
 }

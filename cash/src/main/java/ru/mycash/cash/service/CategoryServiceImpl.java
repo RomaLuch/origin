@@ -4,40 +4,40 @@ package ru.mycash.cash.service;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.repository.CategoryRepository;
 import ru.mycash.cash.repository.CategoryRepositoryImpl;
-
+import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
 
 
 public class CategoryServiceImpl implements CategoryService {
 
-   // private static final Logger log = getLogger(CategoryServiceImpl.class);
-
+    private static final Logger log = getLogger(CategoryServiceImpl.class);
     CategoryRepository repoitory = new CategoryRepositoryImpl();
 
-/*    public static void main(String[] args) {
-        CategoryRepository repo = new CategoryRepositoryImpl();
-        repo.getAll().stream().forEach(System.out::println);
-    }*/
 
     @Override
     public void save(Category category) {
+        log.info("Save {}", category);
         repoitory.save(category);
     }
 
     @Override
     public void delete(Integer id) {
-repoitory.delete(id);
+        log.info("delet category id({})", id);
+        repoitory.delete(id);
     }
 
     @Override
     public Category get(Integer id) {
+        log.info("get category id({})", id);
         return repoitory.get(id);
     }
 
     @Override
     public List<Category> getAll() {
+        log.info("getAll");
         return new ArrayList<>(repoitory.getAll());
     }
 }
