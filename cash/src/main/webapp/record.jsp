@@ -37,6 +37,7 @@
 <hr>
 <form method="post" action = 'records' name="record">
     <jsp:useBean id="record" scope="request" type="ru.mycash.cash.model.Record"/>
+    <%--<jsp:useBean id="category" scope="request" type="ru.mycash.cash.model.Category"/>--%>
 
     <input type="hidden" name="id" value="${record.id}">
     <dl>
@@ -52,7 +53,13 @@
         <dl>
             <input type="hidden" name="category_id" value="${record.category.id}">
             <dd>Категория</dd>
-            <dt><input type="text" name="amount" value="${record.category.name}"></dt>
+            <dt><select>
+                <c:forEach items="${categorys}" var="category">
+                    <jsp:useBean id="category" scope="request" type="ru.mycash.cash.model.Category"/>
+                <option>${category.name}</option>
+                </c:forEach>
+            </select></dt>
+            <dt><a href="category.jsp<%--?action=category_add&category_id=${record.category}--%>">+</a></dt>
         </dl>
 
 <dd>Сумма</dd>

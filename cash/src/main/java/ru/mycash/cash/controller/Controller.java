@@ -16,17 +16,29 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+
+
 public class Controller extends HttpServlet{
 
+    //private static final Logger log = getLogger(Controller.class);
     Service service = new ServiseImpl();
     CategoryService categoryService = new CategoryServiceImpl();
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("doget");
+  //      log.info("doGet");
+List<Category> categories = categoryService.getAll();
+        System.out.println(categories);
 
+categories.stream().forEach(System.out::println);
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+
+        if("category".equalsIgnoreCase(action))
+        {
+            System.out.println("category");
+        }
 
         switch (action == null ? "all" : action) {
             case "create":
@@ -34,6 +46,14 @@ public class Controller extends HttpServlet{
                 final Record record = "create".equalsIgnoreCase(action) ?
                         new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",categoryService.get(1), 1000) :
                         service.get(Integer.parseInt(request.getParameter("id")));
+
+                System.out.println("create");
+
+                //List<Category> categories = categoryService.getAll();
+                System.out.println(categories);
+                categories.stream().forEach(System.out::println);
+
+                request.setAttribute("categorys", categories);
                 request.setAttribute("record", record);
                 request.getRequestDispatcher("/record.jsp").forward(request, response);
                 break;
@@ -44,6 +64,7 @@ public class Controller extends HttpServlet{
                 break;
             case "all":
             default:
+
                 System.out.println("action =" + action);
                 List<Record> records = service.getAll();
                 records.forEach(System.out::println);
@@ -51,6 +72,9 @@ public class Controller extends HttpServlet{
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
                 break;
         }
+
+
+
     }
 
     @Override
