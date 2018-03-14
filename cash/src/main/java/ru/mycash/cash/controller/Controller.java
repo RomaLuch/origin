@@ -37,6 +37,9 @@ private static final Logger log = getLogger(Controller.class);
             case "create":
             case "update":
                 log.info(action);
+                String catid = request.getParameter("category_id");
+                log.info("category id ({})", catid);
+                //Integer categoryId = Integer.parseInt(request.getParameter("category_id"));
                 final Record record = "create".equalsIgnoreCase(action) ?
                         new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",categoryService.get(1), 1000) :
                         service.get(Integer.parseInt(request.getParameter("id")));
@@ -73,7 +76,7 @@ private static final Logger log = getLogger(Controller.class);
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String category = request.getParameter("category_id");
-
+log.info("DOPOST category_id({})", category);
 
         Record record = new Record(id.isEmpty()?null:Integer.parseInt(id),
                 LocalDateTime.parse(request.getParameter("date")),
