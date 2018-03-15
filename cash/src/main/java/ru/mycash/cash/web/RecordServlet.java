@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import ru.mycash.cash.controller.RecordRestController;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
+import ru.mycash.cash.util.RecordsUtil;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -64,9 +66,11 @@ public class RecordServlet extends HttpServlet {
                 log.info("All");
                 List<Record> records = controller.getAll();
                 List<Category> categories = controller.getAllCategories();
+                Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
                 request.setAttribute("categories", categories);
+                request.setAttribute("total", total);
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
                 break;
         }

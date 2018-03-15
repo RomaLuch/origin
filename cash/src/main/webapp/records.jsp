@@ -35,6 +35,11 @@
             <td><a href="records?action=delete&id=${record.id}">delete</a></td>
         </tr>
     </c:forEach>
+    <tr>
+        <td colspan="3" align="center"><b>Сумма:</b></td>
+        <td><b>${total}</b></td>
+        <td colspan="2"><b></b></td>
+    </tr>
 </table>
 
 <a href="records?action=create">
