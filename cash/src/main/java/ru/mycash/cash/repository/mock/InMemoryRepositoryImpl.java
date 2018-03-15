@@ -1,8 +1,9 @@
-package ru.mycash.cash.repository;
+package ru.mycash.cash.repository.mock;
 
 import org.slf4j.Logger;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
+import ru.mycash.cash.repository.Repository;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -12,9 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class RepositoryImpl implements Repository{
+public class InMemoryRepositoryImpl implements Repository {
 
-    private static final Logger log = getLogger(RepositoryImpl.class);
+    private static final Logger log = getLogger(InMemoryRepositoryImpl.class);
 
     private static AtomicInteger count = new AtomicInteger(0);
 

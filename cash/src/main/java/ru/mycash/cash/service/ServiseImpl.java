@@ -3,10 +3,9 @@ package ru.mycash.cash.service;
 import org.slf4j.Logger;
 import ru.mycash.cash.repository.Repository;
 import ru.mycash.cash.model.Record;
-import ru.mycash.cash.repository.RepositoryImpl;
+import ru.mycash.cash.repository.mock.InMemoryRepositoryImpl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -15,7 +14,7 @@ public class ServiseImpl implements Service{
 
     private static final Logger log = getLogger(ServiseImpl.class);
 
-    Repository repository = new RepositoryImpl();
+    Repository repository = new InMemoryRepositoryImpl();
 
     @Override
     public Record create(Record record) {

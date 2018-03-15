@@ -3,7 +3,7 @@ package ru.mycash.cash.service;
 
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.repository.CategoryRepository;
-import ru.mycash.cash.repository.CategoryRepositoryImpl;
+import ru.mycash.cash.repository.mock.InMemoryCategoryRepositoryImpl;
 import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger log = getLogger(CategoryServiceImpl.class);
-    CategoryRepository repoitory = new CategoryRepositoryImpl();
+    CategoryRepository repoitory = new InMemoryCategoryRepositoryImpl();
 
     @Override
     public Category create(Category category) {

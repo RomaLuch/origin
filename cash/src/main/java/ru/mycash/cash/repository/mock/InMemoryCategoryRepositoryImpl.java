@@ -1,8 +1,8 @@
-package ru.mycash.cash.repository;
+package ru.mycash.cash.repository.mock;
 
 import org.slf4j.Logger;
 import ru.mycash.cash.model.Category;
-import ru.mycash.cash.model.Record;
+import ru.mycash.cash.repository.CategoryRepository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.slf4j.LoggerFactory.getLogger;
 
 
-public class CategoryRepositoryImpl implements CategoryRepository {
+public class InMemoryCategoryRepositoryImpl implements CategoryRepository {
 
-private static final Logger log = getLogger(CategoryRepositoryImpl.class);
+private static final Logger log = getLogger(InMemoryCategoryRepositoryImpl.class);
     private static AtomicInteger count = new AtomicInteger(0);
     private Map<Integer, Category> repository = new ConcurrentHashMap<>();
 
