@@ -1,13 +1,9 @@
-package ru.mycash.cash.controller;
+package ru.mycash.cash.web;
 
 import org.slf4j.Logger;
+import ru.mycash.cash.controller.RecordRestController;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
-import ru.mycash.cash.service.CategoryService;
-import ru.mycash.cash.service.CategoryServiceImpl;
-import ru.mycash.cash.service.Service;
-import ru.mycash.cash.service.ServiseImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +15,13 @@ import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-
-public class Controller extends HttpServlet{
-private static final Logger log = getLogger(Controller.class);
-    //private static final Logger log = getLogger(Controller.class);
-    Service service = new ServiseImpl();
-    CategoryService categoryService = new CategoryServiceImpl();
+/**
+ * Created by RLuchinsky on 15.03.2018.
+ */
+public class RecordServlet extends HttpServlet {
+    private static final Logger log = getLogger(RecordServlet.class);
+    RecordRestController controller = new RecordRestController ();
+   // CategoryService categoryService = new CategoryServiceImpl();
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,34 +38,32 @@ private static final Logger log = getLogger(Controller.class);
                 log.info(action);
                 String catid = request.getParameter("category_id");
                 log.info("category id ({})", catid);
-                //Integer categoryId = Integer.parseInt(request.getParameter("category_id"));
                 final Record record = "create".equalsIgnoreCase(action) ?
-                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",categoryService.get(1), 1000) :
-                        service.get(Integer.parseInt(request.getParameter("id")));
+                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",controller.getCategory(1), 1000) :
+                        controller.get(Integer.parseInt(request.getParameter("id")));
 
 
-                request.setAttribute("categorys", categoryService.getAll());
+                request.setAttribute("categorys", controller.getAllCategories());
                 request.setAttribute("record", record);
                 request.getRequestDispatcher("/record.jsp").forward(request, response);
                 break;
             case "createCategory":
                 log.info("createCategory");
                 Category createCategory = new Category("");
-                //log.info("createCategoryID({}) createCategoryName({})",createCategory.getId(),createCategory.getName());
                 request.setAttribute("category", createCategory);
                 request.getRequestDispatcher("/category.jsp").forward(request, response);
                 break;
             case "delete":
                 log.info("delete");
                 Integer id = Integer.parseInt(request.getParameter("id"));
-                service.delete(id);
+                controller.delete(id);
                 response.sendRedirect("records");
                 break;
             case "all":
             default:
                 log.info("All");
-                List<Record> records = service.getAll();
-                List<Category> categories = categoryService.getAll();
+                List<Record> records = controller.getAll();
+                List<Category> categories = controller.getAllCategories();
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
                 request.setAttribute("categories", categories);
@@ -87,7 +82,7 @@ private static final Logger log = getLogger(Controller.class);
             String id = request.getParameter("add_categoryId");
             String name = request.getParameter("add_categoryName");
             Category category = new Category(name);
-            categoryService.create(category);
+            controller.createCategory(category);
             response.sendRedirect("records");
             return;
         } else {
@@ -98,11 +93,11 @@ private static final Logger log = getLogger(Controller.class);
             Record record = new Record(id.isEmpty() ? null : Integer.parseInt(id),
                     LocalDateTime.parse(request.getParameter("date")),
                     request.getParameter("description"),
-                    categoryService.get(Integer.parseInt(category)),
+                    controller.getCategory(Integer.parseInt(category)),
                     Integer.parseInt(request.getParameter("amount")));
             if (record.isNew()) {
-                service.create(record);
-            } else service.update(record);
+                controller.create(record);
+            } else controller.update(record);
             response.sendRedirect("records");
         }
     }

@@ -12,7 +12,7 @@
 
   <servlet>
     <servlet-name>cashServlet</servlet-name>
-    <servlet-class>ru.mycash.cash.controller.Controller</servlet-class>
+    <servlet-class>ru.mycash.cash.web.RecordServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>
