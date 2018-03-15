@@ -49,28 +49,17 @@
 <dt><input type="text" name="description" value="${record.description}"></dt>
     </dl>
     <dl>
-
         <dl>
             <dd>Категория</dd>
             <dt><select name="category_id">
                 <option selected value="${record.category.id}">${record.category.name}</option>
                 <c:forEach items="${categorys}" var="category">
                     <jsp:useBean id="category" scope="page" type="ru.mycash.cash.model.Category"/>
-
                    <c:if test="${category.id!=record.category.id}">
                        <option value="${category.id}">${category.name}</option>
                    </c:if>
-<%--                    <c:choose>
-                        <c:when test="${category.name.equals(record.category.name)}">
-                   &lt;%&ndash; <option selected value="${category.id}">${category.name}</option>&ndash;%&gt;
-                        </c:when>
-                        <c:otherwise>
-                    <option value="${category.id}">${category.name}</option>
-                        </c:otherwise>
-                    </c:choose>--%>
                 </c:forEach>
             </select></dt>
-            <dt><a href="category.jsp<%--?action=category_add&category_id=${record.category}--%>">+</a></dt>
         </dl>
 
 <dd>Сумма</dd>

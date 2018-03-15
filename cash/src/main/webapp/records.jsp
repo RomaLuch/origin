@@ -28,6 +28,7 @@
         <tr>
             <td>${f:toString(record.dateTime)}</td>
             <td>${record.description}</td>
+            <td hidden>${record.category.id}</td>
             <td>${record.category.name}</td>
             <td>${record.amount}</td>
             <td><a href="records?action=update&id=${record.id}">update</a></td>
@@ -37,7 +38,10 @@
 </table>
 
 <a href="records?action=create">
-    <button>Добавить еду</button>
+    <button>Добавить запись</button>
+</a>
+<a href="records?action=createCategory">
+    <button>Добавить категорию</button>
 </a>
 </body>
 </html>

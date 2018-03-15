@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Repository {
-    void save(Record record);
+    Record save(Record record);
     void delete(Integer id);
     Record get(Integer id);
     Collection<Record> getAll();

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -29,11 +30,12 @@
     </style>
 </head>
 </body>
-<form action = 'records' name="category">
-
+<form method="post" action = 'records' name="createCategory">
+<%--    <jsp:useBean id="category" scope="request" type="ru.mycash.cash.model.Category"/>--%>
 <dl>
-<dd><input type="hidden" name="category_id">кат:</dd>
-<dt><input type="text" name="category"></dt>
+<dd>категория:</dd>
+<input type="hidden" name="add_categoryId" value="${category.getId()}">
+    <dt><input type="text" name="add_categoryName" required>${category.getName()}</dt>
 <dt><input type="submit" value="+"></dt>
 </dl>
 

@@ -17,10 +17,15 @@ public class ServiseImpl implements Service{
 
     Repository repository = new RepositoryImpl();
 
+    @Override
+    public Record create(Record record) {
+        log.info("update category id({})", record);
+        return repository.save(record);
+    }
 
     @Override
-    public void save(Record record) {
-        log.info("save category id({})", record);
+    public void update(Record record) {
+        log.info("update category id({})", record);
         repository.save(record);
     }
 

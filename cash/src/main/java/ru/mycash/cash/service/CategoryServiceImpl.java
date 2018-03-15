@@ -16,10 +16,15 @@ public class CategoryServiceImpl implements CategoryService {
     private static final Logger log = getLogger(CategoryServiceImpl.class);
     CategoryRepository repoitory = new CategoryRepositoryImpl();
 
+    @Override
+    public Category create(Category category) {
+        log.info("Create {}", category);
+       return repoitory.save(category);
+    }
 
     @Override
-    public void save(Category category) {
-        log.info("Save {}", category);
+    public void update(Category category) {
+        log.info("Update {}", category);
         repoitory.save(category);
     }
 

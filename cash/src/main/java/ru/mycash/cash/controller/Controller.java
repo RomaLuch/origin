@@ -29,9 +29,11 @@ private static final Logger log = getLogger(Controller.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        log.info("doGet");
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        log.info("doGet action = {}", action);
+
 
         switch (action == null ? "all" : action) {
             case "create":
@@ -49,6 +51,13 @@ private static final Logger log = getLogger(Controller.class);
                 request.setAttribute("record", record);
                 request.getRequestDispatcher("/record.jsp").forward(request, response);
                 break;
+            case "createCategory":
+                log.info("createCategory");
+                Category createCategory = new Category("");
+                //log.info("createCategoryID({}) createCategoryName({})",createCategory.getId(),createCategory.getName());
+                request.setAttribute("category", createCategory);
+                request.getRequestDispatcher("/category.jsp").forward(request, response);
+                break;
             case "delete":
                 log.info("delete");
                 Integer id = Integer.parseInt(request.getParameter("id"));
@@ -60,6 +69,7 @@ private static final Logger log = getLogger(Controller.class);
                 log.info("All");
                 List<Record> records = service.getAll();
                 List<Category> categories = categoryService.getAll();
+                categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
                 request.setAttribute("categories", categories);
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
@@ -67,24 +77,33 @@ private static final Logger log = getLogger(Controller.class);
         }
 
 
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
-        String id = request.getParameter("id");
-        String category = request.getParameter("category_id");
-log.info("DOPOST category_id({})", category);
 
-        Record record = new Record(id.isEmpty()?null:Integer.parseInt(id),
-                LocalDateTime.parse(request.getParameter("date")),
-                request.getParameter("description"),
-                categoryService.get(Integer.parseInt(category)),
-                Integer.parseInt(request.getParameter("amount")));
+        if (request.getParameter("add_categoryName") != null) {
+            String id = request.getParameter("add_categoryId");
+            String name = request.getParameter("add_categoryName");
+            Category category = new Category(name);
+            categoryService.create(category);
+            response.sendRedirect("records");
+            return;
+        } else {
+            String id = request.getParameter("id");
+            String category = request.getParameter("category_id");
+            log.info("DOPOST category_id({})", category);
 
-            service.save(record);
-        response.sendRedirect("records");
+            Record record = new Record(id.isEmpty() ? null : Integer.parseInt(id),
+                    LocalDateTime.parse(request.getParameter("date")),
+                    request.getParameter("description"),
+                    categoryService.get(Integer.parseInt(category)),
+                    Integer.parseInt(request.getParameter("amount")));
+            if (record.isNew()) {
+                service.create(record);
+            } else service.update(record);
+            response.sendRedirect("records");
+        }
     }
 }

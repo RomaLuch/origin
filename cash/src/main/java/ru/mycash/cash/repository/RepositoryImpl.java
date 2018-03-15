@@ -22,9 +22,9 @@ public class RepositoryImpl implements Repository{
 
 
     public static final List<Record> RECORDS = Arrays.asList(
-        new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "обед",new Category("еда"), 500),
-        new Record(LocalDateTime.of(2018, Month.MAY, 30, 11, 0), "такси", new Category("транспорт"), 100),
-        new Record(LocalDateTime.of(2018, Month.MAY, 30, 12, 0), "кино", new Category("развлечение"), 600)
+        new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "обед",new Category(1,"еда"), 500),
+        new Record(LocalDateTime.of(2018, Month.MAY, 30, 11, 0), "такси", new Category(2,"транспорт"), 100),
+        new Record(LocalDateTime.of(2018, Month.MAY, 30, 12, 0), "кино", new Category(3,"развлечения"), 600)
     );
 
 
@@ -33,14 +33,14 @@ public class RepositoryImpl implements Repository{
     }
 
     @Override
-    public void save(Record record) {
+    public Record save(Record record) {
         log.info("save {}",record);
     if(record.isNew())
     {
     record.setId(count.incrementAndGet());
-    repository.put(record.getId(),record);
+    return repository.put(record.getId(),record);
     }
-    else repository.computeIfPresent(record.getId(),(id, oldValue)->record);
+    else return repository.computeIfPresent(record.getId(),(id, oldValue)->record);
     }
 
     @Override

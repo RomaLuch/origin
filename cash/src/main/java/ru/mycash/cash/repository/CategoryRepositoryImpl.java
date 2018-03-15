@@ -2,6 +2,7 @@ package ru.mycash.cash.repository;
 
 import org.slf4j.Logger;
 import ru.mycash.cash.model.Category;
+import ru.mycash.cash.model.Record;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,15 +26,17 @@ public static final List<Category> CATEGORY = Arrays.asList(new Category("еда
     }
 
     @Override
-    public void save(Category category) {
+    public Category save(Category category) {
         log.info("Save {}", category);
         if(category.isNew())
         {
             category.setId(count.incrementAndGet());
-            repository.put(category.getId(),category);
+            log.info("newCategoryID({}) newCategoryName({})", category.getId(),category.getName());
+            return repository.put(category.getId(),category);
         }
         else {
-            repository.computeIfPresent(category.getId(), (id, oldValue) -> category);
+            log.info("oldCategory");
+            return repository.computeIfPresent(category.getId(), (id, oldValue) -> category);
         }
         }
 
