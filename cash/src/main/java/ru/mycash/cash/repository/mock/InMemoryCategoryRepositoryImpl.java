@@ -22,13 +22,9 @@ public static final List<Category> CATEGORY = Arrays.asList(new Category("еда
                                                         new Category("транспорт"),
                                                         new Category("развлечения"));
 
-public static final Category NEW_CATEGORY = new Category(0,"newCategory");
 
 
     {
-        Map<Integer,Category> categories = new ConcurrentHashMap<>(); //todo
-        categories.put(0,NEW_CATEGORY);//todo
-        repository.put(0,categories);//todo
         CATEGORY.forEach(category -> save(category, 1));
     }
 
@@ -54,7 +50,6 @@ public static final Category NEW_CATEGORY = new Category(0,"newCategory");
     @Override
     public Category get(Integer id, Integer userId) {
         log.info("get id({})", id);
-        if(id==0) return repository.get(0).get(0);//todo
         Map<Integer,Category> categories = repository.get(userId);
         return categories==null?null:categories.get(id);
     }
@@ -68,9 +63,5 @@ public static final Category NEW_CATEGORY = new Category(0,"newCategory");
                 .stream()
                 .sorted(Comparator.comparing(Category::getName))
                 .collect(Collectors.toList());
-                /*.
-                stream()
-                .sorted(Comparator.comparing(Category::getName))
-                .collect(Collectors.toList());*/
     }
 }

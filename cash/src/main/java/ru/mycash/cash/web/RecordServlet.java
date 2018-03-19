@@ -40,8 +40,13 @@ public class RecordServlet extends HttpServlet {
                 log.info(action);
                 String catid = request.getParameter("category_id");
                 log.info("category id ({})", catid);
+                Category def = controller.getAllCategories()
+                        .stream()
+                        .filter(category -> "default".equalsIgnoreCase(category.getName()))
+                        .findAny()
+                        .get();
                 final Record record = "create".equalsIgnoreCase(action) ?
-                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",controller.getCategory(0), 1000) ://todo
+                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",def, 1000) ://todo
                         controller.get(Integer.parseInt(request.getParameter("id")));
 
 
@@ -66,6 +71,12 @@ public class RecordServlet extends HttpServlet {
                 log.info("All");
                 List<Record> records = controller.getAll();
                 List<Category> categories = controller.getAllCategories();
+                Category def_from_all = categories
+                        .stream()
+                        .filter(category -> "default".equalsIgnoreCase(category.getName()))
+                        .findAny()
+                        .orElse(null);
+                if(def_from_all==null) controller.createCategory(new Category("default"));
                 Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
