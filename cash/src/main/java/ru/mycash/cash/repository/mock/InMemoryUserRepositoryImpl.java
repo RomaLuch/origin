@@ -1,8 +1,9 @@
-package ru.mycash.cash.repository;
+package ru.mycash.cash.repository.mock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.mycash.cash.model.User;
+import ru.mycash.cash.repository.UserRepository;
 
 import java.util.Comparator;
 import java.util.List;

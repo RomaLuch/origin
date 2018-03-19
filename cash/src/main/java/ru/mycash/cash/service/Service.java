@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Service {
-    void update(Record record);
-    Record create (Record record);
-    void delete(Integer id);
-    Record get(Integer id);
-    List<Record> getAll();
+    void update(Record record, Integer userId);
+    Record create (Record record, Integer userId);
+    void delete(Integer id, Integer userId);
+    Record get(Integer id, Integer userId);
+    List<Record> getAll(Integer userId);
 }

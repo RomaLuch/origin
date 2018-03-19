@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Repository {
-    Record save(Record record);
-    void delete(Integer id);
-    Record get(Integer id);
-    Collection<Record> getAll();
+    Record save(Record record, Integer userId);
+    boolean delete(Integer id, Integer userId);
+    Record get(Integer id, Integer userId);
+    Collection<Record> getAll(Integer userId);
 }

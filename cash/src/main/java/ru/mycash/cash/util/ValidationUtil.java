@@ -10,7 +10,7 @@ public class ValidationUtil {
         checkNotFound(found, "id=" + id);
     }
 
-    public static <T> T checkNotFoundWithId(T object, int id) {
+    private static <T> T checkNotFoundWithId(T object, int id) {
         return checkNotFound(object, "id=" + id);
     }
 
