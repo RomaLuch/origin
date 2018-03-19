@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -77,6 +78,17 @@ public class RecordServlet extends HttpServlet {
                         .findAny()
                         .orElse(null);
                 if(def_from_all==null) controller.createCategory(new Category("default"));
+
+                String filter = request.getParameter("category_id");
+                System.out.println(filter);
+                System.out.println(filter);
+                System.out.println(filter);
+                System.out.println(filter);
+                records = (filter==null)?records:
+                        records
+                .stream()
+                .filter(record1 -> record1.getCategory().getId().equals(Integer.valueOf(filter)))
+                .collect(Collectors.toList());
                 Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);

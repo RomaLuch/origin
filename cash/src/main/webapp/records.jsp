@@ -14,7 +14,21 @@
 </head>
 <body>
 <p>Cash Records</p>
-
+<hr>
+<form method="get" action = 'records' name="category_filter">
+<dl>
+    <dd>Категория</dd>
+    <dt><select name="category_id">
+        <%--<option selected value="${record.category.id}">${record.category.name}</option>--%>
+        <c:forEach items="${categories}" var="category">
+            <jsp:useBean id="category" scope="page" type="ru.mycash.cash.model.Category"/>
+                <option value="${category.id}">${category.name}</option>
+        </c:forEach>
+    </select></dt>
+</dl>
+    <input type="submit">
+</form>
+<hr>
 <table border="_1">
     <caption>Все записи</caption>
     <th>Дата</th>
