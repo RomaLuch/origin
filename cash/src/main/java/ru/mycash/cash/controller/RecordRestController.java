@@ -32,7 +32,7 @@ private static final Logger log = getLogger(RecordRestController.class);
     public Category createCategory(Category category) {
         int user_id = AuthorizedUser.id();
         log.info("create category id({})", category);
-        return categoryService.create(category);
+        return categoryService.create(category, user_id);
     }
 
 
@@ -44,7 +44,7 @@ private static final Logger log = getLogger(RecordRestController.class);
     public void updateCategory(Category category) {
         int user_id = AuthorizedUser.id();
         log.info("update category id({})", category);
-        categoryService.update(category);
+        categoryService.update(category, user_id);
     }
 
 
@@ -56,7 +56,7 @@ private static final Logger log = getLogger(RecordRestController.class);
     public void deleteCategory(Integer id) {
         int user_id = AuthorizedUser.id();
         log.info("delet category id({})", id);
-        categoryService.delete(id);
+        categoryService.delete(id, user_id);
     }
 
 
@@ -68,7 +68,7 @@ private static final Logger log = getLogger(RecordRestController.class);
     public Category getCategory(Integer id) {
         int user_id = AuthorizedUser.id();
         log.info("get category id({})", id);
-        return  categoryService.get(id);
+        return  categoryService.get(id, user_id);
     }
 
     public List<Record> getAll() {
@@ -79,6 +79,6 @@ private static final Logger log = getLogger(RecordRestController.class);
     public List<Category> getAllCategories() {
         int user_id = AuthorizedUser.id();
         log.info("getAllRecords");
-        return new ArrayList<>(categoryService.getAll());
+        return new ArrayList<>(categoryService.getAll(user_id));
     }
 }

@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import ru.mycash.cash.repository.Repository;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.repository.mock.InMemoryRecordRepositoryImpl;
-import ru.mycash.cash.util.ValidationUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
+import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 
 public class ServiseImpl implements Service{
 
@@ -21,25 +20,25 @@ public class ServiseImpl implements Service{
     @Override
     public Record create(Record record, Integer userId) {
         log.info("update category id({})", record);
-        return repository.save(record, userId);
+        return checkNotFoundWithId(repository.save(record, userId), record.getId());
     }
 
     @Override
-    public void update(Record record, Integer userId) {
+    public Record update(Record record, Integer userId) {
         log.info("update category id({})", record);
-        repository.save(record, userId);
+        return checkNotFoundWithId(repository.save(record, userId),record.getId());
     }
 
     @Override
     public void delete(Integer id, Integer userId) {
         log.info("delet category id({})", id);
-        checkNotFoundWithId(repository.delete(id, userId), id);
+        checkNotFoundWithIdBoolean(repository.delete(id, userId), id);
     }
 
     @Override
     public Record get(Integer id, Integer userId) {
         log.info("get category id({})", id);
-        return repository.get(id, userId);
+        return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     @Override

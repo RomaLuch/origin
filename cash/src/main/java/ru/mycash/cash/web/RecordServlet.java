@@ -41,7 +41,7 @@ public class RecordServlet extends HttpServlet {
                 String catid = request.getParameter("category_id");
                 log.info("category id ({})", catid);
                 final Record record = "create".equalsIgnoreCase(action) ?
-                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",controller.getCategory(1), 1000) :
+                        new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",controller.getCategory(0), 1000) ://todo
                         controller.get(Integer.parseInt(request.getParameter("id")));
 
 

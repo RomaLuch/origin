@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
+import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 
 
 public class CategoryServiceImpl implements CategoryService {
@@ -17,32 +19,32 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository repoitory = new InMemoryCategoryRepositoryImpl();
 
     @Override
-    public Category create(Category category) {
+    public Category create(Category category, Integer userId) {
         log.info("Create {}", category);
-       return repoitory.save(category);
+       return repoitory.save(category, userId);
     }
 
     @Override
-    public void update(Category category) {
+    public Category update(Category category, Integer userId) {
         log.info("Update {}", category);
-        repoitory.save(category);
+        return checkNotFoundWithId(repoitory.save(category, userId),category.getId());
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id, Integer userId) {
         log.info("delet category id({})", id);
-        repoitory.delete(id);
+        checkNotFoundWithIdBoolean(repoitory.delete(id,userId),id);
     }
 
     @Override
-    public Category get(Integer id) {
+    public Category get(Integer id, Integer userId) {
         log.info("get category id({})", id);
-        return repoitory.get(id);
+        return checkNotFoundWithId(repoitory.get(id, userId), id);
     }
 
     @Override
-    public List<Category> getAll() {
+    public List<Category> getAll(Integer userId) {
         log.info("getAll");
-        return new ArrayList<>(repoitory.getAll());
+        return new ArrayList<>(repoitory.getAll(userId));
     }
 }

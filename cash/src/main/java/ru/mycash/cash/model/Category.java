@@ -9,7 +9,6 @@ public class Category extends AbstractNamedEntity {
         super(id, name);
     }
 
-
     public Category(String name) {
         this(null,name);
     }

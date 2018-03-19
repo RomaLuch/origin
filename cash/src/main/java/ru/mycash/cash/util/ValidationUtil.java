@@ -6,11 +6,11 @@ import ru.mycash.cash.util.exception.NotFoundException;
 
 public class ValidationUtil {
 
-    public static void checkNotFoundWithId(boolean found, int id) {
+    public static void checkNotFoundWithIdBoolean(boolean found, int id) {
         checkNotFound(found, "id=" + id);
     }
 
-    private static <T> T checkNotFoundWithId(T object, int id) {
+    public static <T> T checkNotFoundWithId(T object, int id) {
         return checkNotFound(object, "id=" + id);
     }
 

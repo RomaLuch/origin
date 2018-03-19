@@ -7,6 +7,7 @@ import ru.mycash.cash.repository.CategoryRepository;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -15,47 +16,59 @@ public class InMemoryCategoryRepositoryImpl implements CategoryRepository {
 
 private static final Logger log = getLogger(InMemoryCategoryRepositoryImpl.class);
     private static AtomicInteger count = new AtomicInteger(0);
-    private Map<Integer, Category> repository = new ConcurrentHashMap<>();
+    private Map<Integer, Map<Integer, Category>> repository = new ConcurrentHashMap<>();
 
 public static final List<Category> CATEGORY = Arrays.asList(new Category("еда"),
                                                         new Category("транспорт"),
                                                         new Category("развлечения"));
 
+public static final Category NEW_CATEGORY = new Category(0,"newCategory");
+
+
     {
-        CATEGORY.forEach(this::save);
+        Map<Integer,Category> categories = new ConcurrentHashMap<>(); //todo
+        categories.put(0,NEW_CATEGORY);//todo
+        repository.put(0,categories);//todo
+        CATEGORY.forEach(category -> save(category, 1));
     }
 
     @Override
-    public Category save(Category category) {
+    public Category save(Category category, Integer userId) {
         log.info("Save {}", category);
-        if(category.isNew())
-        {
+        Map<Integer,Category> categories = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
+        if(category.isNew()){
             category.setId(count.incrementAndGet());
-            log.info("newCategoryID({}) newCategoryName({})", category.getId(),category.getName());
-            return repository.put(category.getId(),category);
+            categories.put(category.getId(),category);
+            return category;
         }
-        else {
-            log.info("oldCategory");
-            return repository.computeIfPresent(category.getId(), (id, oldValue) -> category);
-        }
+            return categories.computeIfPresent(category.getId(), (id, oldValue) -> category);
         }
 
     @Override
-    public void delete(Integer id) {
+    public boolean delete(Integer id, Integer userId) {
         log.info("delet category id({})", id);
-        repository.remove(id);
+        Map<Integer,Category> categories = repository.get(userId);
+        return categories!=null&&categories.get(id)!=null;
     }
 
     @Override
-    public Category get(Integer id) {
+    public Category get(Integer id, Integer userId) {
         log.info("get id({})", id);
-        return repository.get(id);
+        if(id==0) return repository.get(0).get(0);//todo
+        Map<Integer,Category> categories = repository.get(userId);
+        return categories==null?null:categories.get(id);
     }
 
     @Override
-    public Collection<Category> getAll() {
+    public Collection<Category> getAll(Integer userId) {
         log.info("getAll");
-        return repository.values();/*.
+        Map<Integer,Category> categories = repository.get(userId);
+        return categories==null? Collections.emptyList()
+                :categories.values()
+                .stream()
+                .sorted(Comparator.comparing(Category::getName))
+                .collect(Collectors.toList());
+                /*.
                 stream()
                 .sorted(Comparator.comparing(Category::getName))
                 .collect(Collectors.toList());*/
