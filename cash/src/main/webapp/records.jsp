@@ -15,19 +15,41 @@
 <body>
 <p>Cash Records</p>
 <hr>
-<form method="get" action = 'records' name="category_filter">
-<dl>
-    <dd>Категория</dd>
-    <dt><select name="category_id">
-        <%--<option selected value="${record.category.id}">${record.category.name}</option>--%>
-        <c:forEach items="${categories}" var="category">
-            <jsp:useBean id="category" scope="page" type="ru.mycash.cash.model.Category"/>
+<form method="post" action="records?action=filter">
+    <dl>
+        <dt>From Date:</dt>
+        <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
+    </dl>
+    <dl>
+        <dt>To Date:</dt>
+        <dd><input type="date" name="endDate" value="${param.endDate}"></dd>
+    </dl>
+    <dl>
+        <dt>From Time:</dt>
+        <dd><input type="time" name="startTime" value="${param.startTime}"></dd>
+    </dl>
+    <dl>
+        <dt>To Time:</dt>
+        <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
+    </dl>
+
+    <dl>
+        <dt>Категория</dt>
+
+        <dd><select name="category_id_to_filter">
+            <%--<option selected value="${record.category.id}">${record.category.name}</option>--%>
+            <c:forEach items="${categories}" var="category">
+                <jsp:useBean id="category" scope="page" type="ru.mycash.cash.model.Category"/>
                 <option value="${category.id}">${category.name}</option>
-        </c:forEach>
-    </select></dt>
-</dl>
-    <input type="submit">
+            </c:forEach>
+        </select></dd>
+    </dl>
+
+    <button type="submit">Filter</button>
 </form>
+
+<hr/>
+
 <hr>
 <table border="_1">
     <caption>Все записи</caption>

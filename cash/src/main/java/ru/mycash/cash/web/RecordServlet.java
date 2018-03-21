@@ -11,12 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.mycash.cash.util.TimeUtil.parseLocalDate;
+import static ru.mycash.cash.util.TimeUtil.parseLocalTime;
 
 /**
  * Created by RLuchinsky on 15.03.2018.
@@ -105,6 +109,8 @@ public class RecordServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
+        String action = request.getParameter("action");
+
         if (request.getParameter("add_categoryName") != null) {
             String id = request.getParameter("add_categoryId");
             String name = request.getParameter("add_categoryName");
@@ -112,7 +118,19 @@ public class RecordServlet extends HttpServlet {
             controller.createCategory(category);
             response.sendRedirect("records");
             return;
-        } else {
+        }
+            else if ("filter".equals(action)) {
+                LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+                LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+                String category_to_filter = request.getParameter("category_id_to_filter");
+             //   request.setAttribute("records", controller.getBetween
+            // (startDate, startTime, endDate, endTime, category_to_filter)); todo
+                request.getRequestDispatcher("/records.jsp").forward(request, response);
+            }
+
+         else {
             String id = request.getParameter("id");
             String category = request.getParameter("category_id");
             log.info("DOPOST category_id({})", category);
