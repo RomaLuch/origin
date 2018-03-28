@@ -4,10 +4,16 @@ import org.slf4j.Logger;
 import ru.mycash.cash.repository.Repository;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.repository.mock.InMemoryRecordRepositoryImpl;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.mycash.cash.util.TimeUtil.isBeatweenDateTime;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 
@@ -45,5 +51,20 @@ public class ServiseImpl implements Service{
     public List<Record> getAll(Integer userId) {
         log.info("getAll");
         return new ArrayList<>(repository.getAll(userId));
+    }
+
+    @Override
+    public List<Record> getAllFiltred(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, Integer categoryId, Integer userId) {
+
+        log.info("getAllFiltred");
+
+        LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime);
+
+        return repository.getAll(userId)
+                .stream()
+                .filter(record -> isBeatweenDateTime(record.getDateTime(),startDateTime,endDateTime))
+                .filter(record -> record.getCategory().getId()==categoryId)
+                .collect(Collectors.toList());
     }
 }

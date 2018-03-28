@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import static ru.mycash.cash.util.TimeUtil.parseLocalDate;
-import static ru.mycash.cash.util.TimeUtil.parseLocalTime;
 
 /**
  * Created by RLuchinsky on 15.03.2018.
@@ -82,17 +80,14 @@ public class RecordServlet extends HttpServlet {
                         .findAny()
                         .orElse(null);
                 if(def_from_all==null) controller.createCategory(new Category("default"));
-
+/*
                 String filter = request.getParameter("category_id");
-                System.out.println(filter);
-                System.out.println(filter);
-                System.out.println(filter);
-                System.out.println(filter);
+
                 records = (filter==null)?records:
                         records
                 .stream()
                 .filter(record1 -> record1.getCategory().getId().equals(Integer.valueOf(filter)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
                 Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
@@ -120,15 +115,18 @@ public class RecordServlet extends HttpServlet {
             return;
         }
             else if ("filter".equals(action)) {
-                LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
-                LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
-                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
-                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-                String category_to_filter = request.getParameter("category_id_to_filter");
-             //   request.setAttribute("records", controller.getBetween
+
+                LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
+                LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
+                LocalTime startTime = LocalTime.parse(request.getParameter("startTime"));
+                LocalTime endTime = LocalTime.parse(request.getParameter("endTime"));
+                Integer category_to_filter = Integer.valueOf(request.getParameter("category_id_to_filter"));
+                List<Record> records = controller.getAllFiltred(startDate,endDate,startTime,endTime,category_to_filter);
+
+                //   request.setAttribute("records", controller.getBetween
             // (startDate, startTime, endDate, endTime, category_to_filter)); todo
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
-            }
+        }
 
          else {
             String id = request.getParameter("id");

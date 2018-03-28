@@ -11,6 +11,8 @@ import ru.mycash.cash.service.CategoryServiceImpl;
 import ru.mycash.cash.service.Service;
 import ru.mycash.cash.service.ServiseImpl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,5 +82,11 @@ private static final Logger log = getLogger(RecordRestController.class);
         int user_id = AuthorizedUser.id();
         log.info("getAllRecords");
         return new ArrayList<>(categoryService.getAll(user_id));
+    }
+
+    public List<Record> getAllFiltred(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, Integer categoryId) {
+        int user_id = AuthorizedUser.id();
+       return service.getAllFiltred(startDate, endDate, startTime,endTime,categoryId, user_id);
+
     }
 }
