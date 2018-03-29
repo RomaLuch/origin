@@ -5,6 +5,7 @@ import ru.mycash.cash.controller.RecordRestController;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.util.RecordsUtil;
+import ru.mycash.cash.util.TimeUtil.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +17,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.mycash.cash.util.TimeUtil.*;
 
 /**
  * Created by RLuchinsky on 15.03.2018.
@@ -116,10 +119,21 @@ public class RecordServlet extends HttpServlet {
         }
             else if ("filter".equals(action)) {
 
-                LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
-                LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
-                LocalTime startTime = LocalTime.parse(request.getParameter("startTime"));
-                LocalTime endTime = LocalTime.parse(request.getParameter("endTime"));
+                LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+                      startDate = Objects.isNull(startDate)? MIN_DATE:startDate;
+                LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+                      endDate = Objects.isNull(endDate)? MAX_DATE:endDate;
+                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+                      startTime = Objects.isNull(startTime)?MIN_TIME:startTime;
+                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+                        endTime = Objects.isNull(endTime)?MAX_TIME:endTime
+                        ;
+
+/*            System.out.println("STARTDATE: "+startDate);
+            System.out.println("ENDDATE: "+endDate);
+            System.out.println("STARTTIME: "+startTime);
+            System.out.println("ENDTIME: "+endTime);*/
+
                 Integer category_to_filter = Integer.valueOf(request.getParameter("category_id_to_filter"));
                 List<Record> records = controller.getAllFiltred(startDate,endDate,startTime,endTime,category_to_filter);
 
