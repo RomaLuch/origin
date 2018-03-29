@@ -37,7 +37,7 @@
         <dt>Категория</dt>
 
         <dd><select name="category_id_to_filter">
-            <%--<option selected value="${record.category.id}">${record.category.name}</option>--%>
+            <option selected value="-1">All</option>
             <c:forEach items="${categories}" var="category">
                 <jsp:useBean id="category" scope="page" type="ru.mycash.cash.model.Category"/>
                 <option value="${category.id}">${category.name}</option>

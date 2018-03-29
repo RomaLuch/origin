@@ -123,7 +123,17 @@ public class RecordServlet extends HttpServlet {
                 Integer category_to_filter = Integer.valueOf(request.getParameter("category_id_to_filter"));
                 List<Record> records = controller.getAllFiltred(startDate,endDate,startTime,endTime,category_to_filter);
 
-                //   request.setAttribute("records", controller.getBetween
+                Integer total = RecordsUtil.getTotal(records);
+                List<Category> categories = records
+                        .stream()
+                        .map(Record::getCategory)
+                        .collect(Collectors.toList());
+
+                request.setAttribute("records", records);
+
+                request.setAttribute("categories", categories);
+                request.setAttribute("total", total);
+
             // (startDate, startTime, endDate, endTime, category_to_filter)); todo
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
         }

@@ -61,7 +61,11 @@ public class ServiseImpl implements Service{
         LocalDateTime startDateTime = LocalDateTime.of(startDate,startTime);
         LocalDateTime endDateTime = LocalDateTime.of(endDate,endTime);
 
-        return repository.getAll(userId)
+        return categoryId==-1?repository.getAll(userId)
+                .stream()
+                .filter(record -> isBeatweenDateTime(record.getDateTime(),startDateTime,endDateTime))
+                .collect(Collectors.toList())
+        :repository.getAll(userId)
                 .stream()
                 .filter(record -> isBeatweenDateTime(record.getDateTime(),startDateTime,endDateTime))
                 .filter(record -> record.getCategory().getId()==categoryId)
