@@ -1,9 +1,10 @@
 package ru.mycash.cash.repository.mock;
 
 import org.slf4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
-import ru.mycash.cash.repository.Repository;
+import ru.mycash.cash.repository.RecordRepository;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -14,16 +15,17 @@ import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class InMemoryRecordRepositoryImpl implements Repository {
+@Repository
+public class InMemoryRecordRecordRepositoryImpl implements RecordRepository {
 
-    private static final Logger log = getLogger(InMemoryRecordRepositoryImpl.class);
+    private static final Logger log = getLogger(InMemoryRecordRecordRepositoryImpl.class);
 
     private static AtomicInteger count = new AtomicInteger(0);
 
     private Map<Integer, Map<Integer, Record>> repository = new ConcurrentHashMap<>();
 
 
-    public InMemoryRecordRepositoryImpl() {
+    public InMemoryRecordRecordRepositoryImpl() {
     }
 
     public static final List<Record> RECORDS = Arrays.asList(

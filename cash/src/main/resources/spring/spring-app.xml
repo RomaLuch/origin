@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:component-scan base-package="ru.mycash.cash.repository.mock"/>
+    <context:component-scan base-package="ru.mycash.cash.service"/>
+    <context:component-scan base-package="ru.mycash.cash.controller"/>
 
     <!--BEAN_CONFIGURATION-->
-    <!--Repository-->
-    <bean id="recordRepository" class="ru.mycash.cash.repository.mock.InMemoryRecordRepositoryImpl"></bean>
-    <bean id="userRepository" class="ru.mycash.cash.repository.mock.InMemoryUserRepositoryImpl"></bean>
-    <bean id="categoryRepository" class="ru.mycash.cash.repository.mock.InMemoryCategoryRepositoryImpl"></bean>
+    <!--RecordRepository-->
+<!--    <bean id="recordRepository" class="ru.mycash.cash.repository.mock.InMemoryRecordRecordRepositoryImplpositoryImpl"></bean>
+    <bean id="userRepository" class="ru.mycash.cash.recordRepository.mock.InMemoryUserRepositoryImpl"></bean>
+    <bean id="categoryRepository" class="ru.mycash.cash.recordRepository.mock.InMemoryCategoryRepositoryImpl"></bean>
 
-    <!--Service-->
-    <bean id="recordService" class="ru.mycash.cash.service.ServiseImpl">
+    &lt;!&ndash;RecordService&ndash;&gt;
+    <bean id="recordService" class="ru.mycash.cash.recordService.ServiseImpl">
         <constructor-arg ref="recordRepository"/>
     </bean>
 
-    <bean id="userService" class="ru.mycash.cash.service.UserServiceImpl">
+    <bean id="userService" class="ru.mycash.cash.recordService.UserServiceImpl">
         <constructor-arg ref="userRepository"/>
     </bean>
 
-    <bean id="categoryService" class="ru.mycash.cash.service.CategoryServiceImpl">
+    <bean id="categoryService" class="ru.mycash.cash.recordService.CategoryServiceImpl">
         <constructor-arg ref="categoryRepository"/>
     </bean>
 
-    <!--Controller-->
+    &lt;!&ndash;Controller&ndash;&gt;
     <bean id="Controller" class="ru.mycash.cash.controller.RecordRestController">
         <constructor-arg index="0" ref="recordService"/>
         <constructor-arg index="1" ref="categoryService"/>
-    </bean>
+    </bean>-->
     <!--END_CONFIGURATION-->
 
 </beans>

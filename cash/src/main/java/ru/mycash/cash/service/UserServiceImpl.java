@@ -1,6 +1,7 @@
 package ru.mycash.cash.service;
 
 
+import org.springframework.stereotype.Service;
 import ru.mycash.cash.model.User;
 import ru.mycash.cash.repository.UserRepository;
 import ru.mycash.cash.util.exception.NotFoundException;
@@ -10,6 +11,7 @@ import java.util.List;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFound;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public interface Service {
+public interface RecordService {
     Record update(Record record, Integer userId);
     Record create (Record record, Integer userId);
     void delete(Integer id, Integer userId);

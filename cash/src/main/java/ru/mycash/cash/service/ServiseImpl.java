@@ -1,12 +1,13 @@
 package ru.mycash.cash.service;
 
+//import org.springframework.stereotype.RecordService;
+
 import org.slf4j.Logger;
-import ru.mycash.cash.repository.Repository;
+import org.springframework.stereotype.Service;
+import ru.mycash.cash.repository.RecordRepository;
 import ru.mycash.cash.model.Record;
-import ru.mycash.cash.repository.mock.InMemoryRecordRepositoryImpl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,44 +18,45 @@ import static ru.mycash.cash.util.TimeUtil.*;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 
-public class ServiseImpl implements Service{
+@Service
+public class ServiseImpl implements RecordService {
 
     private static final Logger log = getLogger(ServiseImpl.class);
 
-    Repository repository;
+    RecordRepository recordRepository;
 
-    public ServiseImpl(Repository repository) {
-        this.repository = repository;
+    public ServiseImpl(RecordRepository recordRepository) {
+        this.recordRepository = recordRepository;
     }
 
     @Override
     public Record create(Record record, Integer userId) {
         log.info("update category id({})", record);
-        return checkNotFoundWithId(repository.save(record, userId), record.getId());
+        return checkNotFoundWithId(recordRepository.save(record, userId), record.getId());
     }
 
     @Override
     public Record update(Record record, Integer userId) {
         log.info("update category id({})", record);
-        return checkNotFoundWithId(repository.save(record, userId),record.getId());
+        return checkNotFoundWithId(recordRepository.save(record, userId),record.getId());
     }
 
     @Override
     public void delete(Integer id, Integer userId) {
         log.info("delet category id({})", id);
-        checkNotFoundWithIdBoolean(repository.delete(id, userId), id);
+        checkNotFoundWithIdBoolean(recordRepository.delete(id, userId), id);
     }
 
     @Override
     public Record get(Integer id, Integer userId) {
         log.info("get category id({})", id);
-        return checkNotFoundWithId(repository.get(id, userId), id);
+        return checkNotFoundWithId(recordRepository.get(id, userId), id);
     }
 
     @Override
     public List<Record> getAll(Integer userId) {
         log.info("getAll");
-        return new ArrayList<>(repository.getAll(userId));
+        return new ArrayList<>(recordRepository.getAll(userId));
     }
 
     @Override
@@ -62,12 +64,12 @@ public class ServiseImpl implements Service{
 
         log.info("getAllFiltred");
 
-        return categoryId==-1?repository.getAll(userId)
+        return categoryId==-1? recordRepository.getAll(userId)
                 .stream()
                 .filter(record -> isBetween(record.getDateTime().toLocalDate(),startDate,endDate))
                 .filter(record -> isBetween(record.getDateTime().toLocalTime(),startTime,endTime))
                 .collect(Collectors.toList())
-        :repository.getAll(userId)
+        : recordRepository.getAll(userId)
                 .stream()
                 .filter(record -> isBetween(record.getDateTime().toLocalDate(),startDate,endDate))
                 .filter(record -> isBetween(record.getDateTime().toLocalTime(),startTime,endTime))

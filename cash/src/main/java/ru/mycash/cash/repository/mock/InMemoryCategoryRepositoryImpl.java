@@ -1,6 +1,7 @@
 package ru.mycash.cash.repository.mock;
 
 import org.slf4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.repository.CategoryRepository;
 
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 import static org.slf4j.LoggerFactory.getLogger;
 
 
+@Repository
 public class InMemoryCategoryRepositoryImpl implements CategoryRepository {
 
 private static final Logger log = getLogger(InMemoryCategoryRepositoryImpl.class);

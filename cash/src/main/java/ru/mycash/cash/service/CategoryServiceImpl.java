@@ -1,9 +1,11 @@
 package ru.mycash.cash.service;
 
 
+
+import org.springframework.stereotype.Service;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.repository.CategoryRepository;
-import ru.mycash.cash.repository.mock.InMemoryCategoryRepositoryImpl;
+
 import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 
-
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger log = getLogger(CategoryServiceImpl.class);

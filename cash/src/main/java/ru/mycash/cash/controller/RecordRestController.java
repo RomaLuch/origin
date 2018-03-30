@@ -3,13 +3,13 @@ package ru.mycash.cash.controller;
 
 
 import org.slf4j.Logger;
+import org.springframework.stereotype.Controller;
 import ru.mycash.cash.AuthorizedUser;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.service.CategoryService;
-import ru.mycash.cash.service.CategoryServiceImpl;
-import ru.mycash.cash.service.Service;
-import ru.mycash.cash.service.ServiseImpl;
+import ru.mycash.cash.service.RecordService;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,13 +18,14 @@ import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+@Controller
 public class RecordRestController
 {
-    private Service service;
+    private RecordService recordService;
     private CategoryService categoryService;
 
-    public RecordRestController(Service service, CategoryService categoryService) {
-        this.service = service;
+    public RecordRestController(RecordService recordService, CategoryService categoryService) {
+        this.recordService = recordService;
         this.categoryService = categoryService;
     }
 
@@ -33,7 +34,7 @@ public class RecordRestController
     public Record create(Record record) {
         int user_id = AuthorizedUser.id();
         log.info("create record id({})", record);
-        return service.create(record, user_id);
+        return recordService.create(record, user_id);
     }
     public Category createCategory(Category category) {
         int user_id = AuthorizedUser.id();
@@ -45,7 +46,7 @@ public class RecordRestController
     public void update(Record record) {
         int user_id = AuthorizedUser.id();
         log.info("update record id({})", record);
-        service.update(record, user_id);
+        recordService.update(record, user_id);
     }
     public void updateCategory(Category category) {
         int user_id = AuthorizedUser.id();
@@ -57,7 +58,7 @@ public class RecordRestController
     public void delete(Integer id) {
         int user_id = AuthorizedUser.id();
         log.info("delet record id({})", id);
-        service.delete(id, user_id);
+        recordService.delete(id, user_id);
     }
     public void deleteCategory(Integer id) {
         int user_id = AuthorizedUser.id();
@@ -69,7 +70,7 @@ public class RecordRestController
     public Record get(Integer id) {
         int user_id = AuthorizedUser.id();
         log.info("get record id({})", id);
-        return  service.get(id,user_id);
+        return  recordService.get(id,user_id);
     }
     public Category getCategory(Integer id) {
         int user_id = AuthorizedUser.id();
@@ -80,7 +81,7 @@ public class RecordRestController
     public List<Record> getAll() {
         int user_id = AuthorizedUser.id();
         log.info("getAllRecords");
-        return new ArrayList<>(service.getAll(user_id));
+        return new ArrayList<>(recordService.getAll(user_id));
     }
     public List<Category> getAllCategories() {
         int user_id = AuthorizedUser.id();
@@ -90,7 +91,7 @@ public class RecordRestController
 
     public List<Record> getAllFiltred(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, Integer categoryId) {
         int user_id = AuthorizedUser.id();
-       return service.getAllFiltred(startDate, endDate, startTime,endTime,categoryId, user_id);
+       return recordService.getAllFiltred(startDate, endDate, startTime,endTime,categoryId, user_id);
 
     }
 }
