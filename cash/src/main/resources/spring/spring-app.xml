@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--BEAN_CONFIGURATION-->
+    <!--Repository-->
+    <bean id="recordRepository" class="ru.mycash.cash.repository.mock.InMemoryRecordRepositoryImpl"></bean>
+    <bean id="userRepository" class="ru.mycash.cash.repository.mock.InMemoryUserRepositoryImpl"></bean>
+    <bean id="categoryRepository" class="ru.mycash.cash.repository.mock.InMemoryCategoryRepositoryImpl"></bean>
+
+    <!--Service-->
+    <bean id="recordService" class="ru.mycash.cash.service.ServiseImpl">
+        <constructor-arg ref="recordRepository"/>
+    </bean>
+
+    <bean id="userService" class="ru.mycash.cash.service.UserServiceImpl">
+        <constructor-arg ref="userRepository"/>
+    </bean>
+
+    <bean id="categoryService" class="ru.mycash.cash.service.CategoryServiceImpl">
+        <constructor-arg ref="categoryRepository"/>
+    </bean>
+
+    <!--Controller-->
+    <bean id="Controller" class="ru.mycash.cash.controller.RecordRestController">
+        <constructor-arg index="0" ref="recordService"/>
+        <constructor-arg index="1" ref="categoryService"/>
+    </bean>
+    <!--END_CONFIGURATION-->
+
+</beans>

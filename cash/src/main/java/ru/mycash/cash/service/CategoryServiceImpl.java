@@ -16,7 +16,11 @@ import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger log = getLogger(CategoryServiceImpl.class);
-    CategoryRepository repoitory = new InMemoryCategoryRepositoryImpl();
+    CategoryRepository repoitory;
+
+    public CategoryServiceImpl(CategoryRepository repoitory) {
+        this.repoitory = repoitory;
+    }
 
     @Override
     public Category create(Category category, Integer userId) {

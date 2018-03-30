@@ -20,11 +20,15 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class RecordRestController
 {
-    private Service service = new ServiseImpl();
-    private CategoryService categoryService = new CategoryServiceImpl();
+    private Service service;
+    private CategoryService categoryService;
 
+    public RecordRestController(Service service, CategoryService categoryService) {
+        this.service = service;
+        this.categoryService = categoryService;
+    }
 
-private static final Logger log = getLogger(RecordRestController.class);
+    private static final Logger log = getLogger(RecordRestController.class);
 
     public Record create(Record record) {
         int user_id = AuthorizedUser.id();

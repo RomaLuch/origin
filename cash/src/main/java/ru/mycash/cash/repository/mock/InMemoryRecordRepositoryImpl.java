@@ -23,6 +23,9 @@ public class InMemoryRecordRepositoryImpl implements Repository {
     private Map<Integer, Map<Integer, Record>> repository = new ConcurrentHashMap<>();
 
 
+    public InMemoryRecordRepositoryImpl() {
+    }
+
     public static final List<Record> RECORDS = Arrays.asList(
         new Record(LocalDateTime.of(2018, Month.MAY, 30, 10, 0), "обед",new Category(1,"еда"), 500),
         new Record(LocalDateTime.of(2018, Month.MAY, 30, 11, 0), "такси", new Category(2,"транспорт"), 100),

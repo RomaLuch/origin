@@ -1,12 +1,15 @@
 package ru.mycash.cash.web;
 
 import org.slf4j.Logger;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.mycash.cash.controller.RecordRestController;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.util.RecordsUtil;
 import ru.mycash.cash.util.TimeUtil.*;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +31,18 @@ import static ru.mycash.cash.util.TimeUtil.*;
  */
 public class RecordServlet extends HttpServlet {
     private static final Logger log = getLogger(RecordServlet.class);
-    RecordRestController controller = new RecordRestController ();
-   // CategoryService categoryService = new CategoryServiceImpl();
+
+    private ConfigurableApplicationContext springContext;
+    RecordRestController controller;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        controller = springContext.getBean(RecordRestController.class);
+    }
+
+// CategoryService categoryService = new CategoryServiceImpl();
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

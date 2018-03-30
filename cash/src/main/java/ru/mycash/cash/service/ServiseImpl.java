@@ -21,7 +21,11 @@ public class ServiseImpl implements Service{
 
     private static final Logger log = getLogger(ServiseImpl.class);
 
-    Repository repository = new InMemoryRecordRepositoryImpl();
+    Repository repository;
+
+    public ServiseImpl(Repository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Record create(Record record, Integer userId) {
