@@ -34,7 +34,7 @@ public class RecordRestController
 
     public Record create(Record record) {
         int user_id = AuthorizedUser.id();
-        log.info("create record id({})", record);
+        log.info("creat e record id({})", record);
         return recordService.create(record, user_id);
     }
     public Category createCategory(Category category) {

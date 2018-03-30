@@ -2,6 +2,7 @@ package ru.mycash.cash.repository.mock;
 
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
+import ru.mycash.cash.RecordTestData;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.repository.RecordRepository;
@@ -14,18 +15,35 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.mycash.cash.RecordTestData.*;
+
 
 @Repository
-public class InMemoryRecordRecordRepositoryImpl implements RecordRepository {
+public class InMemoryRecordRepositoryImpl implements RecordRepository {
 
-    private static final Logger log = getLogger(InMemoryRecordRecordRepositoryImpl.class);
+    private static final Logger log = getLogger(InMemoryRecordRepositoryImpl.class);
 
     private static AtomicInteger count = new AtomicInteger(0);
 
     private Map<Integer, Map<Integer, Record>> repository = new ConcurrentHashMap<>();
 
 
-    public InMemoryRecordRecordRepositoryImpl() {
+    public InMemoryRecordRepositoryImpl() {
+    }
+
+    public void initToTests()
+    {
+        System.out.println("------INIT------");
+        repository.clear();
+        Map<Integer, Record> adminRecords = new ConcurrentHashMap<Integer, Record>();
+        Map<Integer, Record> userRecords = new ConcurrentHashMap<Integer, Record>();
+        adminRecords.put(RECORD_ID_1,RecordTestData.RECORD_1);
+        adminRecords.put(RECORD_ID_2,RecordTestData.RECORD_2);
+        userRecords.put(RECORD_ID_3,RecordTestData.RECORD_3);
+        repository.put(ADMIN_ID, adminRecords);
+        repository.put(USER_ID,userRecords);
+        repository.keySet().stream().forEach(System.out::println);
+        repository.values().stream().forEach(System.out::println);
     }
 
     public static final List<Record> RECORDS = Arrays.asList(
