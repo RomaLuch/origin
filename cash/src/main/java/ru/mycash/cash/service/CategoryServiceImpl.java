@@ -2,6 +2,7 @@ package ru.mycash.cash.service;
 
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.repository.CategoryRepository;
@@ -18,10 +19,11 @@ import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger log = getLogger(CategoryServiceImpl.class);
-    CategoryRepository repoitory;
 
-    public CategoryServiceImpl(CategoryRepository repoitory) {
-        this.repoitory = repoitory;
+    @Autowired
+    private CategoryRepository repoitory;
+
+    public CategoryServiceImpl() {
     }
 
     @Override

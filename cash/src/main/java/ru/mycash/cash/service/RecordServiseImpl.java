@@ -3,6 +3,7 @@ package ru.mycash.cash.service;
 //import org.springframework.stereotype.RecordService;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mycash.cash.repository.RecordRepository;
 import ru.mycash.cash.model.Record;
@@ -19,14 +20,14 @@ import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
 import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithIdBoolean;
 
 @Service
-public class ServiseImpl implements RecordService {
+public class RecordServiseImpl implements RecordService {
 
-    private static final Logger log = getLogger(ServiseImpl.class);
+    private static final Logger log = getLogger(RecordServiseImpl.class);
 
-    RecordRepository recordRepository;
+    @Autowired
+    private RecordRepository recordRepository;
 
-    public ServiseImpl(RecordRepository recordRepository) {
-        this.recordRepository = recordRepository;
+    public RecordServiseImpl() {
     }
 
     @Override

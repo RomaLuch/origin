@@ -1,6 +1,7 @@
 package ru.mycash.cash.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.mycash.cash.model.User;
 import ru.mycash.cash.repository.UserRepository;
@@ -14,11 +15,11 @@ import static ru.mycash.cash.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
+    @Autowired
+    private UserRepository repository;
 
 
-    public UserServiceImpl(UserRepository repository) {
-        this.repository = repository;
+    public UserServiceImpl() {
     }
 
     @Override

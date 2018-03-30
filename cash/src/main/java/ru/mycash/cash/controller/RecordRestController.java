@@ -3,6 +3,7 @@ package ru.mycash.cash.controller;
 
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.mycash.cash.AuthorizedUser;
 import ru.mycash.cash.model.Category;
@@ -21,12 +22,12 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Controller
 public class RecordRestController
 {
+    @Autowired
     private RecordService recordService;
+    @Autowired
     private CategoryService categoryService;
 
-    public RecordRestController(RecordService recordService, CategoryService categoryService) {
-        this.recordService = recordService;
-        this.categoryService = categoryService;
+    public RecordRestController() {
     }
 
     private static final Logger log = getLogger(RecordRestController.class);
