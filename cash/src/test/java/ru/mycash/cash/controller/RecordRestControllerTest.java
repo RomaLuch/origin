@@ -21,7 +21,7 @@ public class RecordRestControllerTest {
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-    applicationContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+    applicationContext = new ClassPathXmlApplicationContext("spring/spring-app.xml","spring/mock.xml");
     controller = applicationContext.getBean(RecordRestController.class);
         AuthorizedUser.setId(ADMIN_ID);
     }
