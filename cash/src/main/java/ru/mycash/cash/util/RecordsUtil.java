@@ -9,6 +9,7 @@ public class RecordsUtil {
     public static Integer getTotal(List<Record> records)
 
     {
+        if (records==null) return 0;
         return records.stream().mapToInt(Record::getAmount).sum();
     }
 }

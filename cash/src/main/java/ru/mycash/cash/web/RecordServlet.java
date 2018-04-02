@@ -38,7 +38,7 @@ public class RecordServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         controller = springContext.getBean(RecordRestController.class);
     }
 
@@ -104,11 +104,12 @@ public class RecordServlet extends HttpServlet {
                 .stream()
                 .filter(record1 -> record1.getCategory().getId().equals(Integer.valueOf(filter)))
                 .collect(Collectors.toList());*/
-                Integer total = RecordsUtil.getTotal(records);
+records.stream().forEach(System.out::println);
+               // Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
                 request.setAttribute("categories", categories);
-                request.setAttribute("total", total);
+                //request.setAttribute("total", total);
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
                 break;
         }

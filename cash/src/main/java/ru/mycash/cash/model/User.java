@@ -10,6 +10,8 @@ public class User extends AbstractNamedEntity {
 
     private Date registered = new Date();
 
+    public User(){}
+
     public User(Integer id, String name, String email, String password) {
         super(id, name);
         this.email = email;

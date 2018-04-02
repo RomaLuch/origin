@@ -9,8 +9,12 @@ public class Record extends AbstractBaseEntity {
     private String description;
     private Integer amount;
 
-    public Record(LocalDateTime dateTime, String description, Category category, Integer value) {
-        this(null,dateTime,description,category,value);
+    public Record(LocalDateTime dateTime, String description, Category category, Integer amount) {
+        this(null,dateTime,description,category,amount);
+    }
+
+    public Record(Integer id, LocalDateTime dateTime, String description, Integer amount) {
+        this(null,dateTime,description,null, amount);
     }
 
     public Record(Integer id, LocalDateTime dateTime, String description, Category category, Integer amount) {
@@ -20,6 +24,8 @@ public class Record extends AbstractBaseEntity {
         this.category = category;
         this.amount = amount;
     }
+
+
 
     public LocalDateTime getDateTime() {
         return dateTime;

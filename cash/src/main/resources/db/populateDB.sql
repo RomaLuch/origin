@@ -12,7 +12,7 @@ INSERT INTO categories (name, user_id) VALUES
   ('ROAD', 100001),
   ('SHOPING',100001)   ;
 
-INSERT INTO records (date_time, description, amount, user_id, category_id) VALUES
+INSERT INTO records (dateTime, description, amount, user_id, category_id) VALUES
   ('2015-05-30 10:00:00', 'BIG_MAC', 500, 100000,100002),
   ('2015-05-30 13:00:00', 'COLA', 1000, 100000, 100002),
   ('2015-05-30 20:00:00', 'FANTA', 500, 100000, 100002),

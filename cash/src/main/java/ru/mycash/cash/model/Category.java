@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Category extends AbstractNamedEntity {
 
+    public Category(){}
+
     public Category(Integer id, String name) {
         super(id, name);
     }

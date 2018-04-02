@@ -9,6 +9,13 @@ import java.time.temporal.Temporal;
 
 public class TimeUtil {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER_TIMESTAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public static LocalDateTime parseTmeStamp(String timeStamp)
+    {
+        return LocalDateTime.parse(timeStamp,DATE_TIME_FORMATTER_TIMESTAMP);
+    }
+
 
     public static final LocalDate MIN_DATE = LocalDate.of(1000,01,01);
     public static final LocalDate MAX_DATE = LocalDate.of(3000,01,01);

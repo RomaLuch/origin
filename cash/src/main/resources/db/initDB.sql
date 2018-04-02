@@ -27,11 +27,11 @@ CREATE TABLE categories
 );
 CREATE TABLE records (
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  user_id     INTEGER   NOT NULL,
-  category_id     INTEGER   NOT NULL,
-  date_time   TIMESTAMP NOT NULL,
+  dateTime   TIMESTAMP NOT NULL,
   description TEXT      NOT NULL,
   amount    INT       NOT NULL,
+  user_id     INTEGER   NOT NULL,
+  category_id     INTEGER   NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );
