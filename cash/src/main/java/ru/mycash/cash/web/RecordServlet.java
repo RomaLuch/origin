@@ -105,11 +105,11 @@ public class RecordServlet extends HttpServlet {
                 .filter(record1 -> record1.getCategory().getId().equals(Integer.valueOf(filter)))
                 .collect(Collectors.toList());*/
 records.stream().forEach(System.out::println);
-               // Integer total = RecordsUtil.getTotal(records);
+                Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
                 request.setAttribute("records", records);
                 request.setAttribute("categories", categories);
-                //request.setAttribute("total", total);
+                request.setAttribute("total", total);
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
                 break;
         }
