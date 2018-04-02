@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.repository.RecordRepository;
 import ru.mycash.cash.util.TimeUtil;
@@ -70,10 +71,15 @@ public class JdbcRecordRepositoryImpl implements RecordRepository {
                 System.out.println(resultSet.getString(4));
                 System.out.println(resultSet.getString(5));
                 System.out.println(resultSet.getString(6));
+                System.out.println(resultSet.getString(7));
+                System.out.println(resultSet.getString(8));
+
+                Category category = new Category(resultSet.getInt(7),resultSet.getString(8));
+
                 Record record = new Record(resultSet.getInt(1),
                         TimeUtil.parseTmeStamp(resultSet.getString(2)),
                         resultSet.getString(3),
-/*                        resultSet.getInt(6),*/
+                        category,
                         resultSet.getInt(4));
 
                 return record;
@@ -81,6 +87,6 @@ public class JdbcRecordRepositoryImpl implements RecordRepository {
         };
 
         return jdbcTemplate.query(
-                "SELECT * FROM records WHERE user_id=? ORDER BY dateTime DESC", rowMapper,userId);
+                "SELECT * FROM records  LEFT JOIN categories ON (records.category_id = categories.id) WHERE records.user_id=? ORDER BY dateTime DESC", rowMapper, userId);
     }
 }
