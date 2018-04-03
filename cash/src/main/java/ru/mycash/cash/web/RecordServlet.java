@@ -7,7 +7,6 @@ import ru.mycash.cash.controller.RecordRestController;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 import ru.mycash.cash.util.RecordsUtil;
-import ru.mycash.cash.util.TimeUtil.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -78,7 +77,9 @@ public class RecordServlet extends HttpServlet {
             case "createCategory":
                 log.info("createCategory");
                 Category createCategory = new Category("");
+                List<Category> categoriesRedact = controller.getAllCategories();
                 request.setAttribute("category", createCategory);
+                request.setAttribute("categories", categoriesRedact);
                 request.getRequestDispatcher("/category.jsp").forward(request, response);
                 break;
             case "delete":
@@ -126,26 +127,55 @@ records.stream().forEach(System.out::println);
         request.setCharacterEncoding("UTF-8");
 
         String action = request.getParameter("action");
+        log.info("POST_ACTION = {}", action);
 
-        if (request.getParameter("add_categoryName") != null) {
-            String id = request.getParameter("add_categoryId");
-            String name = request.getParameter("add_categoryName");
-            Category category = new Category(name);
-            controller.createCategory(category);
-            response.sendRedirect("records");
-            return;
-        }
-            else if ("filter".equals(action)) {
+        switch (action == null ? "all" : action) {
+            case "create":
+                String name = request.getParameter("add_categoryName");
+                Category category = new Category(name);
+                controller.createCategory(category);
+                response.sendRedirect("records");
+                break;
+            case "remove":
+                System.out.println("TO_DO_REMOVE_CATEGORY");
+                Integer categoryIdToRemove = Integer.parseInt(request.getParameter("category_id"));
+                controller.deleteCategory(categoryIdToRemove);
+                response.sendRedirect("records");
+                break;
+            case "redact":
+                System.out.println("TO_DO_REDACT_CATEGORY");
+                Integer categoryIdToUpdate = Integer.parseInt(request.getParameter("category_id"));
+                String categoryName = request.getParameter("updateCategory");
+                Category categoryToUpdate = new Category(categoryIdToUpdate,categoryName);
+                controller.updateCategory(categoryToUpdate);
+                response.sendRedirect("records");
+                break;
+            case "updateRec":
+            case "createRec":
+                String id = request.getParameter("id");
+                String categoryId = request.getParameter("category_id");
+                log.info("DOPOST category_id({})", categoryId);
 
+                Record record = new Record(id.isEmpty() ? null : Integer.parseInt(id),
+                        LocalDateTime.parse(request.getParameter("date")),
+                        request.getParameter("description"),
+                        controller.getCategory(Integer.parseInt(categoryId)),
+                        Integer.parseInt(request.getParameter("amount")));
+                if (record.isNew()) {
+                    controller.create(record);
+                } else controller.update(record);
+                response.sendRedirect("records");
+                break;
+            case "filter":
                 LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
-                      startDate = Objects.isNull(startDate)? MIN_DATE:startDate;
+                startDate = Objects.isNull(startDate)? MIN_DATE:startDate;
                 LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
-                      endDate = Objects.isNull(endDate)? MAX_DATE:endDate;
+                endDate = Objects.isNull(endDate)? MAX_DATE:endDate;
                 LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
-                      startTime = Objects.isNull(startTime)?MIN_TIME:startTime;
+                startTime = Objects.isNull(startTime)?MIN_TIME:startTime;
                 LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-                        endTime = Objects.isNull(endTime)?MAX_TIME:endTime
-                        ;
+                endTime = Objects.isNull(endTime)?MAX_TIME:endTime
+                ;
 
                 Integer category_to_filter = Integer.valueOf(request.getParameter("category_id_to_filter"));
                 List<Record> records = controller.getAllFiltred(startDate,endDate,startTime,endTime,category_to_filter);
@@ -163,25 +193,8 @@ records.stream().forEach(System.out::println);
                 request.setAttribute("total", total);
 
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
+                break;
         }
 
-         else {
-            String id = request.getParameter("id");
-            String category = request.getParameter("category_id");
-            log.info("DOPOST category_id({})", category);
-
-            Record record = new Record(id.isEmpty() ? null : Integer.parseInt(id),
-                    LocalDateTime.parse(request.getParameter("date")),
-                    request.getParameter("description"),
-                    controller.getCategory(Integer.parseInt(category)),
-                    Integer.parseInt(request.getParameter("amount")));
-
-            System.out.println("RECORD!!!!!!!!!!" + record);
-
-            if (record.isNew()) {
-                controller.create(record);
-            } else controller.update(record);
-            response.sendRedirect("records");
-        }
     }
 }

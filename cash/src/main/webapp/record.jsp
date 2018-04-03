@@ -66,7 +66,7 @@
 <dt><input type="text" name="amount" value="${record.amount}"></dt>
     </dl>
         <hr>
-    <input type="submit" value="${record.getId()!=null?"Изменить":"Создать"}">
+    <input type="submit" name="action" value="${record.getId()!=null?"updateRec":"createRec"}">
 </form>
 </body>
 </html>
