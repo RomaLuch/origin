@@ -8,8 +8,8 @@ INSERT INTO users (name, email, password) VALUES
   ('Admin', 'admin@gmail.com', 'admin');
 
 INSERT INTO categories (name, user_id) VALUES
-  ('EAT', 100001),
-  ('ROAD', 100001),
+  ('EAT', 100000),
+  ('ROAD', 100000),
   ('SHOPING',100001)   ;
 
 INSERT INTO records (dateTime, description, amount, user_id, category_id) VALUES

@@ -49,6 +49,7 @@ public class Record extends AbstractBaseEntity {
                 "id=" + id +
                 ", dateTimetime=" + dateTime +
                 ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
                 ", amount=" + amount +
                 '}';
     }

@@ -63,11 +63,16 @@ public class RecordServlet extends HttpServlet {
                         .stream()
                         .filter(category -> "default".equalsIgnoreCase(category.getName()))
                         .findAny()
+                        .orElse(null);
+                if (def == null) def = controller.getAllCategories().
+                        stream()
+                        .findFirst()
                         .get();
+
+
                 final Record record = "create".equalsIgnoreCase(action) ?
                         new Record(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "",def, 1000) ://todo
                         controller.get(Integer.parseInt(request.getParameter("id")));
-
 
                 request.setAttribute("categorys", controller.getAllCategories());
                 request.setAttribute("record", record);
@@ -176,6 +181,9 @@ records.stream().forEach(System.out::println);
                     request.getParameter("description"),
                     controller.getCategory(Integer.parseInt(category)),
                     Integer.parseInt(request.getParameter("amount")));
+
+            System.out.println("RECORD!!!!!!!!!!" + record);
+
             if (record.isNew()) {
                 controller.create(record);
             } else controller.update(record);
