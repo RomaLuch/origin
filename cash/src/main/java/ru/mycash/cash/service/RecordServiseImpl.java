@@ -74,7 +74,7 @@ public class RecordServiseImpl implements RecordService {
                 .stream()
                 .filter(record -> isBetween(record.getDateTime().toLocalDate(),startDate,endDate))
                 .filter(record -> isBetween(record.getDateTime().toLocalTime(),startTime,endTime))
-                .filter(record -> record.getCategory().getId()==categoryId)
+                .filter(record -> record.getCategory().getId().equals(categoryId))
                 .collect(Collectors.toList());
     }
 }

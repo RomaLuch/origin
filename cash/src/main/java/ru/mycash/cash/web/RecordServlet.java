@@ -26,9 +26,6 @@ import java.util.stream.Collectors;
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.mycash.cash.util.TimeUtil.*;
 
-/**
- * Created by RLuchinsky on 15.03.2018.
- */
 public class RecordServlet extends HttpServlet {
     private static final Logger log = getLogger(RecordServlet.class);
 
@@ -109,6 +106,8 @@ public class RecordServlet extends HttpServlet {
                 .stream()
                 .filter(record1 -> record1.getCategory().getId().equals(Integer.valueOf(filter)))
                 .collect(Collectors.toList());*/
+
+                categories =controller.getAllCategories();
 records.stream().forEach(System.out::println);
                 Integer total = RecordsUtil.getTotal(records);
                 categories.stream().forEach(category -> log.info("categoryId({}) categoryName [{}]",category.getId(),category.getName()));
@@ -148,11 +147,6 @@ records.stream().forEach(System.out::println);
                         endTime = Objects.isNull(endTime)?MAX_TIME:endTime
                         ;
 
-/*            System.out.println("STARTDATE: "+startDate);
-            System.out.println("ENDDATE: "+endDate);
-            System.out.println("STARTTIME: "+startTime);
-            System.out.println("ENDTIME: "+endTime);*/
-
                 Integer category_to_filter = Integer.valueOf(request.getParameter("category_id_to_filter"));
                 List<Record> records = controller.getAllFiltred(startDate,endDate,startTime,endTime,category_to_filter);
 
@@ -160,6 +154,7 @@ records.stream().forEach(System.out::println);
                 List<Category> categories = records
                         .stream()
                         .map(Record::getCategory)
+                        .distinct()
                         .collect(Collectors.toList());
 
                 request.setAttribute("records", records);
@@ -167,7 +162,6 @@ records.stream().forEach(System.out::println);
                 request.setAttribute("categories", categories);
                 request.setAttribute("total", total);
 
-            // (startDate, startTime, endDate, endTime, category_to_filter)); todo
                 request.getRequestDispatcher("/records.jsp").forward(request, response);
         }
 
