@@ -1,5 +1,6 @@
 package ru.mycash.cash;
 
+import ru.mycash.cash.model.AbstractBaseEntity;
 import ru.mycash.cash.model.Category;
 import ru.mycash.cash.model.Record;
 
@@ -9,9 +10,7 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Created by RLuchinsky on 30.03.2018.
- */
+
 public class RecordTestData {
     public static final Integer RECORD_ID_1 = 100005;
     public static final Integer RECORD_ID_2 = 100006;
@@ -42,18 +41,22 @@ public class RecordTestData {
 
 
     public static Record getUpdatedRECORD_1() {
-        return new Record(RECORD_ID_1, RECORD_1.getDateTime(), "UPDATED", RECORD_1.getCategory(), 777);
+        return new Record(RECORD_ID_1, RECORD_1.getDateTime(), "UPDATED_Record", RECORD_1.getCategory(), 777);
     }
 
-    public static void assertMatch(Record actual, Record expected) {
+    public static Category getUpdatedCategory() {
+        return new Category(100002,"UPDATED_Category");
+    }
+
+    public static <T extends AbstractBaseEntity> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "category");
     }
 
-    public static void assertMatch(Iterable<Record> actual, Record... expected) {
+    public static <T extends AbstractBaseEntity> void assertMatch(Iterable<T> actual, T... expected) {
         assertMatch(actual, Arrays.asList(expected));
     }
 
-    public static void assertMatch(Iterable<Record> actual, Iterable<Record> expected) {
+    public static <T extends AbstractBaseEntity> void assertMatch(Iterable<T> actual, Iterable<T> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("category").isEqualTo(expected);
     }
 
