@@ -36,4 +36,4 @@ CREATE TABLE records (
     FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX record_unique_user_datetime_idx ON records (user_id, date_time);
+CREATE UNIQUE INDEX record_unique_user_datetime_idx ON records (user_id, datetime);
