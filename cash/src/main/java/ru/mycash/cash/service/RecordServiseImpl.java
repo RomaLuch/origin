@@ -33,6 +33,8 @@ public class RecordServiseImpl implements RecordService {
     @Override
     public Record create(Record record, Integer userId) {
         log.info("update category id({})", record);
+        System.out.println(record);
+        System.out.println(record.getId());
         return checkNotFoundWithId(recordRepository.save(record, userId), record.getId());
     }
 

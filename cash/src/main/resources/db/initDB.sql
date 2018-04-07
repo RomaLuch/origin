@@ -29,7 +29,7 @@ CREATE TABLE records (
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   dateTime   TIMESTAMP NOT NULL,
   description TEXT      NOT NULL,
-  amount    INT       NOT NULL,
+  amount    INTEGER       NOT NULL,
   user_id     INTEGER   NOT NULL,
   category_id     INTEGER   NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
